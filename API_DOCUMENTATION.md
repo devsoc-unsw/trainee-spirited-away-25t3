@@ -265,7 +265,7 @@ Get all sessions (for debugging/admin purposes).
 
 ---
 
-## Format APIs
+## Format APIs (Optional)
 
 ### POST `/api/format/format`
 Format code based on language.
@@ -320,7 +320,7 @@ Lint code (check for errors without executing).
 
 ---
 
-## AI Enhanced APIs
+## AI Enhanced APIs (Optional)
 
 ### POST `/api/ai/explain`
 Explain code using AI.

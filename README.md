@@ -85,11 +85,11 @@ For complete API documentation, see [API_DOCUMENTATION.md](./API_DOCUMENTATION.m
 - `DELETE /api/session/:sessionId` - Delete a session
 - `GET /api/session` - Get all sessions (debugging/admin)
 
-### Format Endpoints
+### Format Endpoints (optional)
 - `POST /api/format/format` - Format code based on language
 - `POST /api/format/lint` - Lint code (check for errors without executing)
 
-### AI Enhanced Endpoints
+### AI Enhanced Endpoints (optional)
 - `POST /api/ai/explain` - Explain code using AI
 - `POST /api/ai/optimize` - Optimize code using AI
 - `POST /api/ai/generate` - Generate code from description using AI
