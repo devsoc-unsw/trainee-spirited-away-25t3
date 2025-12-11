@@ -67,6 +67,8 @@ npm run dev
 
 ## Backend API Endpoints
 
+For complete API documentation, see [API_DOCUMENTATION.md](./API_DOCUMENTATION.md).
+
 ### Health Check
 - `GET /health` - Server health check
 - `GET /api/health` - API health check
@@ -74,18 +76,28 @@ npm run dev
 ### Compiler Endpoints
 - `GET /api/compiler/languages` - Get supported programming languages
 - `POST /api/compiler/compile` - Compile and execute code
-  ```json
-  {
-    "code": "print('Hello, World!')",
-    "language": "python"
-  }
-  ```
 - `POST /api/compiler/fix` - Fix code using AI API
-  ```json
-  {
-    "code": "def hello()\n    print('Hello')",
-    "language": "python",
-    "issue": "Syntax error" // optional
-  }
-  ```
+
+### Session Endpoints
+- `POST /api/session` - Create a new code session
+- `GET /api/session/:sessionId` - Get a session by ID
+- `PUT /api/session/:sessionId` - Update a session
+- `DELETE /api/session/:sessionId` - Delete a session
+- `GET /api/session` - Get all sessions (debugging/admin)
+
+### Format Endpoints
+- `POST /api/format/format` - Format code based on language
+- `POST /api/format/lint` - Lint code (check for errors without executing)
+
+### AI Enhanced Endpoints
+- `POST /api/ai/explain` - Explain code using AI
+- `POST /api/ai/optimize` - Optimize code using AI
+- `POST /api/ai/generate` - Generate code from description using AI
+
+## Documentation
+
+- **[API_DOCUMENTATION.md](./API_DOCUMENTATION.md)** - Complete API reference with request/response examples
+- **[AWS_DEPLOYMENT.md](./AWS_DEPLOYMENT.md)** - Guide for deploying to AWS, including architecture recommendations and security considerations
+- **[ARCHITECTURE.md](./ARCHITECTURE.md)** - System architecture overview and component details
+
 
