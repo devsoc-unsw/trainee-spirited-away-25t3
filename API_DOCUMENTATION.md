@@ -139,10 +139,41 @@ Fix code using AI API.
     "suggestions": [
       "Consider adding docstrings",
       "Follow PEP 8 style guidelines"
+    ],
+    "changes": [
+      {
+        "lineStart": 1,
+        "lineEnd": 1,
+        "charStart": 10,
+        "charEnd": 10,
+        "oldCode": "def hello()",
+        "newCode": "def hello():",
+        "explanation": "Added missing colon after function definition",
+        "comment": "Function definitions in Python require a colon to indicate the start of the function body."
+      }
     ]
   }
 }
 ```
+
+**Response Fields:**
+- `fixedCode`: The corrected code
+- `explanation`: General explanation of what was fixed
+- `suggestions`: Array of general suggestions for improvement
+- `changes`: Array of detailed change objects (for highlighting and comments)
+  - `lineStart`: Starting line number (1-indexed)
+  - `lineEnd`: Ending line number (1-indexed)
+  - `charStart`: Starting character position in the line (0-indexed)
+  - `charEnd`: Ending character position in the line (0-indexed)
+  - `oldCode`: The original code snippet that was changed
+  - `newCode`: The new code snippet
+  - `explanation`: Why this specific change was made
+  - `comment`: Detailed comment to show on hover/tooltip
+
+**Note:** The `changes` array allows the frontend to:
+- Highlight specific sections of the fixed code
+- Show tooltips/comments on hover over changed sections
+- Display inline annotations explaining each change
 
 ---
 
@@ -442,7 +473,7 @@ When rate limit is exceeded, you'll receive:
 
 ## Notes
 
-1. **Session Storage**: Currently uses in-memory storage. For production, consider using Redis or a database.
+1. **Session Storage**: Uses in-memory storage (Map). Sessions are stored server-side and will be lost on server restart. Suitable for single-server deployments. For multi-server setups or persistence across restarts, consider Redis or a database.
 2. **Code Execution**: Code execution has a timeout of 5 seconds by default.
 3. **AI API**: Requires `AI_API_KEY` and `AI_API_URL` to be set in environment variables.
 4. **CORS**: Configured to allow requests from the frontend origin specified in `CORS_ORIGIN`.
@@ -452,10 +483,10 @@ When rate limit is exceeded, you'll receive:
 ## Future Enhancements
 
 - Authentication/Authorization
-- Persistent session storage (database/Redis)
 - Multi-file project support
 - Code sharing (shareable links)
 - Execution history
 - WebSocket support for real-time collaboration
 - Additional language support (JavaScript, Java, C++, etc.)
+- Optional: Persistent session storage (database/Redis) for multi-server deployments
 

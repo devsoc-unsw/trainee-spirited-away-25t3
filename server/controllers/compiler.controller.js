@@ -77,6 +77,9 @@ export const fixCodeWithAI = async (req, res, next) => {
         fixedCode: result.fixedCode,
         explanation: result.explanation,
         suggestions: result.suggestions,
+        // Detailed changes array for highlighting changed sections
+        // Frontend can use this to highlight code sections and show comments on hover
+        changes: result.changes || [],
       },
     });
   } catch (error) {

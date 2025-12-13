@@ -187,15 +187,15 @@ server/
 ## Scalability Considerations
 
 ### Current State
-- In-memory session storage (not scalable)
+- In-memory session storage (suitable for single-server deployments)
 - Direct code execution on server (security risk)
 - Single server instance
 
 ### Production Recommendations
-- **Session Storage**: Redis or Database
+- **Session Storage**: In-memory storage is fine for single-server deployments. For multi-server setups, consider Redis or Database
 - **Code Execution**: Docker containers or AWS Lambda
-- **Load Balancing**: Multiple server instances
-- **Caching**: Redis for frequently accessed data
+- **Load Balancing**: Multiple server instances (requires shared session storage)
+- **Caching**: Redis for frequently accessed data (optional)
 - **CDN**: CloudFront for static assets
 - **Auto-scaling**: Based on request volume
 
@@ -207,7 +207,7 @@ See [AWS_DEPLOYMENT.md](./AWS_DEPLOYMENT.md) for detailed deployment options.
 - Frontend: S3 + CloudFront
 - Backend API: ECS/Fargate
 - Code Execution: Separate ECS tasks (Docker containers)
-- Session Storage: Redis (ElastiCache) or DynamoDB
+- Session Storage: In-memory (single instance) or Redis (ElastiCache)/DynamoDB (multi-instance)
 - Secrets: AWS Secrets Manager
 
 ## Future Enhancements
@@ -216,7 +216,6 @@ See [AWS_DEPLOYMENT.md](./AWS_DEPLOYMENT.md) for detailed deployment options.
 - [ ] Add more languages (JavaScript, Java, C++)
 - [ ] Implement actual code formatters (black, prettier, etc.)
 - [ ] Implement actual linters (pylint, eslint, etc.)
-- [ ] Persistent session storage (Redis/Database)
 
 ### Medium Term
 - [ ] Authentication system

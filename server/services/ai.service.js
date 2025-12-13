@@ -49,10 +49,28 @@ export const fixCodeWithAIService = async (code, language, issue = null) => {
     const data = await response.json();
 
     // Adjust based on your AI API response structure
+    // The AI API should return detailed change information for highlighting
+    // Expected structure for data.changes:
+    // [
+    //   {
+    //     lineStart: 1,        // Starting line (1-indexed)
+    //     lineEnd: 1,          // Ending line (1-indexed)
+    //     charStart: 10,       // Starting character in line (0-indexed)
+    //     charEnd: 10,         // Ending character in line (0-indexed)
+    //     oldCode: "def hello()",
+    //     newCode: "def hello():",
+    //     explanation: "Added missing colon",
+    //     comment: "Function definitions require a colon in Python"
+    //   }
+    // ]
+    // Frontend can use this to highlight sections and show tooltips on hover
     return {
       fixedCode: data.fixedCode || code,
       explanation: data.explanation || 'Code has been reviewed and fixed.',
       suggestions: data.suggestions || [],
+      // Detailed changes for highlighting and comments
+      // Each change object contains position info and explanation
+      changes: data.changes || [],
     };
   } catch (error) {
     // For now, return a mock response if API is not configured
@@ -63,6 +81,7 @@ export const fixCodeWithAIService = async (code, language, issue = null) => {
       fixedCode: code, // Return original code if API fails
       explanation: 'AI API is not configured. Please set up your AI_API_KEY and AI_API_URL in the .env file.',
       suggestions: [],
+      changes: [], // No changes if API fails
     };
   }
 };

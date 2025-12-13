@@ -25,8 +25,8 @@ Running user-submitted code is a security risk. AWS provides several options:
 - **Serverless** - Pay only for what you use
 
 ### 3. **Managed Services**
-- **RDS/DynamoDB** - For session storage
-- **ElastiCache (Redis)** - For session caching
+- **RDS/DynamoDB** - For session storage (optional, only needed for multi-server deployments)
+- **ElastiCache (Redis)** - For session caching (optional, only needed for multi-server deployments)
 - **S3** - For static frontend hosting
 - **CloudFront** - CDN for faster global access
 
@@ -246,9 +246,20 @@ CMD ["./execute.sh"]
 - Configure task timeout
 - One task per execution (ephemeral)
 
-### 4. Database/Session Storage
+### 4. Database/Session Storage (Optional)
 
-#### Option A: DynamoDB (NoSQL)
+**Note**: The application uses in-memory session storage by default, which is suitable for single-server deployments. Sessions will be lost on server restart. Only implement persistent storage if you need:
+- Multi-server deployments (load balancing)
+- Session persistence across server restarts
+- Long-term session storage
+
+#### Option A: In-Memory (Default - No Setup Required)
+- Current implementation uses a JavaScript Map
+- Sessions stored in server memory
+- Lost on server restart
+- Suitable for single-server deployments
+
+#### Option B: DynamoDB (NoSQL) - For Multi-Server Deployments
 ```bash
 aws dynamodb create-table \
   --table-name compiler-sessions \
@@ -259,7 +270,7 @@ aws dynamodb create-table \
   --billing-mode PAY_PER_REQUEST
 ```
 
-#### Option B: ElastiCache (Redis)
+#### Option C: ElastiCache (Redis) - For Multi-Server Deployments
 - Create Redis cluster
 - Update session service to use Redis client
 - Configure TTL for sessions

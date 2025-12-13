@@ -1,9 +1,13 @@
 /**
  * Session Service
- * Handles code session management (in-memory for now, can be extended to use Redis/DB)
+ * Handles code session management using in-memory storage
+ * 
+ * Note: In-memory storage is suitable for single-server deployments.
+ * Sessions are stored in a Map and will be lost on server restart.
+ * For multi-server deployments or persistence requirements, consider Redis or a database.
  */
 
-// In-memory storage (replace with Redis or database in production)
+// In-memory storage using Map (suitable for single-server setup)
 const sessions = new Map();
 
 /**
