@@ -1,8 +1,26 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 5rem 2rem 2rem; /* increased top padding to bring header further down */
   text-align: center;
+  box-sizing: border-box;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+/* ensure header sits lower if needed */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.5rem; /* push header further down from the top */
+  margin-bottom: 1rem;
 }
 
 .logo {
@@ -37,6 +55,145 @@
   padding: 2em;
 }
 
+.controls { display: flex; gap: 0.75rem; align-items: center; }
+
+.action {
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid #333;
+  background: linear-gradient(#f7f7f7, #eee);
+  cursor: pointer;
+}
+
+.app-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+/* panels */
+.panel {
+  /* make panel layout column so header + controls sit above and textarea fills remaining space */
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  background: #0f1724;
+  color: #e6eef8;
+  padding: 1rem;
+  border-radius: 8px;
+  /* make panels taller so they occupy more of the viewport */
+  min-height: 70vh;
+  box-shadow: 0 6px 18px rgba(2,6,23,0.45);
+}
+
+.panel h2 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.05rem;
+  /* ensure the heading doesn't force extra height on the editor */
+  flex: 0 0 auto;
+}
+
+/* editor styles - make the textareas fill the available panel space */
+.editor, .corrected {
+  width: 100%;
+  /* allow the textarea to grow and fill remaining vertical space */
+  flex: 1 1 auto;
+  height: auto; /* remove calc height so flexbox controls sizing */
+  resize: none;
+  background: #071124;
+  color: #d7e7f6;
+  border: 1px solid #213445;
+  padding: 1rem;
+  border-radius: 6px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
+  font-size: 13px;
+  line-height: 1.5;
+  box-sizing: border-box;
+}
+
+/* corrected area slightly lighter to indicate AI output */
+.corrected {
+  background: linear-gradient(180deg, #051425, #072034);
+}
+
+/* errors - when used as the main content, allow it to fill the panel */
+.error {
+  color: #ffd2d2;
+  background: #3b0f12;
+  padding: 0.75rem;
+  border-radius: 6px;
+  white-space: pre-wrap;
+  overflow: auto;
+  /* allow error block to fill remaining space like the editor */
+  flex: 1 1 auto;
+  box-sizing: border-box;
+}
+
+/* right panel control buttons */
+.right-controls {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex: 0 0 auto; /* keep controls at the top and don't let them grow */
+}
+
+/* terminal (full-width bottom panel) */
+.terminal-panel {
+  margin-top: 1rem;
+  background: linear-gradient(180deg, #071122, #04101a);
+  color: #d7e7f6;
+  border-radius: 8px;
+  padding: 0.75rem;
+  box-shadow: 0 8px 24px rgba(2,6,23,0.5);
+}
+
+.terminal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #bcd4e8;
+}
+
+.terminal-actions { display: flex; gap: 0.5rem; }
+
+.terminal-output {
+  background: #000812;
+  border: 1px solid #122033;
+  border-radius: 6px;
+  padding: 0.75rem;
+  min-height: 140px;
+  max-height: 40vh;
+  overflow: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
+  font-size: 13px;
+  line-height: 1.45;
+  color: #cfe8ff;
+  box-sizing: border-box;
+}
+
+.terminal-text { white-space: pre-wrap; }
+.terminal-error {
+  color: #ffd2d2;
+  white-space: pre-wrap;
+}
+
+/* make the main grid + terminal feel full-width on large screens */
+#root { max-width: 1200px; margin: 0 auto; }
+
+/* keep existing responsive behavior */
+@media (max-width: 880px) {
+  .app-grid { grid-template-columns: 1fr; }
+  .panel { min-height: 300px; }
+
+
+}  .terminal-output { max-height: 30vh; }  .terminal-output { max-height: 30vh; }
+
+/* small utility */
 .read-the-docs {
   color: #888;
 }
