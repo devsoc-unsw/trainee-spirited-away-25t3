@@ -31,14 +31,29 @@ if (NODE_ENV === 'development') {
     next();
   });
 }
-
 // Rate limiting (apply to all routes)
 app.use(rateLimiter);
 
-// API routes
-app.use('/api', routes);
+// Root endpoint
+app.get('/', (req, res) => {
+  res.json({
+    success: true,
+    data: {
+      message: 'Online Compiler API',
+      version: '1.0.0',
+      endpoints: {
+        health: '/health',
+        api: '/api',
+        compiler: '/api/compiler',
+        session: '/api/session',
+        format: '/api/format',
+        ai: '/api/ai',
+      },
+    },
+  });
+});
 
-// Health check endpoint (before rate limiting for monitoring)
+// Health check endpoint
 app.get('/health', (req, res) => {
   res.json({
     success: true,
@@ -47,6 +62,10 @@ app.get('/health', (req, res) => {
     environment: NODE_ENV,
   });
 });
+
+
+// API routes
+app.use('/api', routes);
 
 // 404 handler
 app.use(notFoundHandler);

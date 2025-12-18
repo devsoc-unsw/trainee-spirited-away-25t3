@@ -6,6 +6,24 @@ import aiEnhancedRoutes from './ai-enhanced.routes.js';
 
 const router = express.Router();
 
+// API root endpoint
+router.get('/', (req, res) => {
+  res.json({
+    success: true,
+    data: {
+      message: 'API is running',
+      timestamp: new Date().toISOString(),
+      endpoints: {
+        health: '/api/health',
+        compiler: '/api/compiler',
+        session: '/api/session',
+        format: '/api/format',
+        ai: '/api/ai',
+      },
+    },
+  });
+});
+
 // Health check route
 router.get('/health', (req, res) => {
   res.json({
