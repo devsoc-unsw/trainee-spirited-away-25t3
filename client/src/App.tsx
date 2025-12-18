@@ -134,6 +134,28 @@ function App() {
     setTerminalError(null)
   }
 
+  // updates code state
+  const handleOpenFile = async () => {
+    const [fileHandle] = await (window as any).showOpenFilePicker({
+      types: [{ description: 'Code files', accept: { 'text/plain': ['.txt', '.py', '.c', '.cpp', '.java'] } }],
+      multiple: false
+    });
+    const file = await fileHandle.getFile();
+    const text = await file.text();
+    setCode(text);
+  }
+
+  // downloads what is currently in code
+  const handleSaveFile = async () => {
+    const blob = new Blob([code], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `code.${language}`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
   return (
     <div id="root">
       <header className="header">
@@ -162,6 +184,11 @@ function App() {
 
       <main className="app-grid">
         <section className="panel left">
+          <div className="left-controls"  style={{ marginBottom: '0.5rem', display: 'flex', gap: '0.5rem' }}>
+            <button className="action" onClick={() => setCode('')}>New File</button>
+            <button className="action" onClick={handleOpenFile}>Open</button>
+            <button className="action" onClick={handleSaveFile}>Save</button>
+          </div>
           <h2>Your code</h2>
           <textarea
             className="editor"

@@ -131,6 +131,14 @@ html, body {
   box-sizing: border-box;
 }
 
+/* left panel control buttons */
+.left-controls {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  flex: 0 0 auto; /* keep controls at top */
+}
+
 /* right panel control buttons */
 .right-controls {
   display: flex;
