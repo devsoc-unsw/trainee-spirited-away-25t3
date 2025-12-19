@@ -159,7 +159,7 @@ function App() {
   return (
     <div id="root">
       <header className="header">
-        <h1>AI Compiler </h1>
+        <h1>AI Compiler</h1>
         <div className="controls">
           <label>
             Language:&nbsp;
@@ -184,12 +184,14 @@ function App() {
 
       <main className="app-grid">
         <section className="panel left">
-          <div className="left-controls"  style={{ marginBottom: '0.5rem', display: 'flex', gap: '0.5rem' }}>
-            <button className="action" onClick={() => setCode('')}>New File</button>
-            <button className="action" onClick={handleOpenFile}>Open</button>
-            <button className="action" onClick={handleSaveFile}>Save</button>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <h2>Your code</h2>
+            <div className="right-controls">
+              <button className="action" onClick={() => setCode('')}>New File</button>
+              <button className="action" onClick={handleOpenFile}>Open</button>
+              <button className="action" onClick={handleSaveFile}>Save</button>
+            </div>
           </div>
-          <h2>Your code</h2>
           <textarea
             className="editor"
             value={code}
@@ -202,9 +204,9 @@ function App() {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <h2>Corrected / AI output</h2>
             <div className="right-controls">
-              <button className="control-btn" onClick={handleCopy} disabled={!corrected}>Copy</button>
-              <button className="control-btn" onClick={handleClear}>Clear</button>
-              <button className="control-btn" onClick={handleExplain} disabled={loading}>
+              <button className="action" onClick={handleCopy} disabled={!corrected}>Copy</button>
+              <button className="action" onClick={handleClear}>Clear</button>
+              <button className="action" onClick={handleExplain} disabled={loading}>
                 {loading ? 'Thinking…' : 'Explain code'}
               </button>
             </div>
