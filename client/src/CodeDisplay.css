@@ -1,0 +1,186 @@
+.code-display-container {
+  position: relative;
+  width: 100%;
+  flex: 1 1 auto;
+  height: auto;
+  overflow: auto;
+  background: linear-gradient(180deg, #051425, #072034);
+  border: 1px solid #213445;
+  border-radius: 6px;
+  padding: 1rem;
+  box-sizing: border-box;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.code-display {
+  margin: 0;
+  padding: 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  color: #d7e7f6;
+  background: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.code-display code {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+  background: transparent;
+}
+
+.highlighted-code {
+  background-color: rgba(255, 165, 0, 0.3); /* Orange highlight with transparency */
+  border-bottom: 2px solid rgba(255, 165, 0, 0.6);
+  cursor: help;
+  transition: background-color 0.2s ease;
+  padding: 2px 0;
+  border-radius: 2px;
+}
+
+.highlighted-code:hover {
+  background-color: rgba(255, 165, 0, 0.5);
+  border-bottom-color: rgba(255, 165, 0, 0.9);
+}
+
+.highlighted-code.deletion-marker {
+  background-color: rgba(239, 68, 68, 0.2); /* Red tint for deletions */
+  border-bottom: 2px dashed rgba(239, 68, 68, 0.6);
+  border-left: 2px solid rgba(239, 68, 68, 0.4);
+  padding-left: 2px;
+}
+
+.highlighted-code.deletion-marker:hover {
+  background-color: rgba(239, 68, 68, 0.35);
+  border-bottom-color: rgba(239, 68, 68, 0.8);
+}
+
+.comment-tooltip {
+  position: absolute;
+  z-index: 1000;
+  min-width: 280px;
+  max-width: 400px;
+  background: #1a2332;
+  border: 1px solid #3a4a5f;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 165, 0, 0.2);
+  pointer-events: none;
+  animation: fadeIn 0.15s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.comment-header {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #2a3544;
+  background: linear-gradient(180deg, #1f2a3a, #1a2332);
+}
+
+.comment-title {
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: #ffa500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.comment-content {
+  padding: 1rem;
+}
+
+.comment-text {
+  color: #d7e7f6;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  margin-bottom: 0.75rem;
+}
+
+.comment-code-diff {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #2a3544;
+}
+
+.code-diff-line {
+  margin-bottom: 0.5rem;
+  font-size: 0.8125rem;
+}
+
+.code-diff-line:last-child {
+  margin-bottom: 0;
+}
+
+.diff-label {
+  display: inline-block;
+  min-width: 50px;
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: #9ca3af;
+  margin-right: 0.5rem;
+}
+
+.old-code {
+  color: #f87171;
+  background: rgba(248, 113, 113, 0.1);
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
+}
+
+.new-code {
+  color: #34d399;
+  background: rgba(52, 211, 153, 0.1);
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
+}
+
+.deleted-code {
+  color: #f87171;
+  background: rgba(239, 68, 68, 0.15);
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
+  font-style: italic;
+}
+
+/* Ensure tooltip doesn't go outside the container */
+.comment-tooltip {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+/* Scrollbar styling for tooltip */
+.comment-tooltip::-webkit-scrollbar {
+  width: 6px;
+}
+
+.comment-tooltip::-webkit-scrollbar-track {
+  background: #1a2332;
+  border-radius: 3px;
+}
+
+.comment-tooltip::-webkit-scrollbar-thumb {
+  background: #3a4a5f;
+  border-radius: 3px;
+}
+
+.comment-tooltip::-webkit-scrollbar-thumb:hover {
+  background: #4a5a6f;
+}
+

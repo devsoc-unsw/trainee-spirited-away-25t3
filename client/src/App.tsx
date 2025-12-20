@@ -1,10 +1,22 @@
 import { useState } from 'react'
 import './App.css'
+import CodeDisplay from './CodeDisplay'
 
 type ApiResult<T = any> = {
   success: boolean
   data?: T
   message?: string
+}
+
+type Change = {
+  lineStart: number
+  lineEnd: number
+  charStart: number
+  charEnd: number
+  oldCode: string
+  newCode: string
+  explanation: string
+  comment: string
 }
 
 function App() {
@@ -18,9 +30,11 @@ function App() {
 
   const [code, setCode] = useState<string>(helloSnippets['python'])
   const [corrected, setCorrected] = useState<string>('')
+  const [changes, setChanges] = useState<Change[]>([])
   const [language, setLanguage] = useState<string>('python')
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<string | null>(null)
+  const [isExplanation, setIsExplanation] = useState<boolean>(false)
 
   // terminal state
   const [terminalOutput, setTerminalOutput] = useState<string>('')
@@ -51,15 +65,20 @@ function App() {
   const handleFix = async () => {
     setLoading(true)
     setError(null)
+    setIsExplanation(false)
     try {
-      const res: ApiResult<{ fixedCode: string; explanation?: string }> =
+      const res: ApiResult<{ fixedCode: string; explanation?: string; changes?: Change[] }> =
         await postJSON('/api/compiler/fix', { code, language, issue: '' })
+      
       if (!res.success) {
         setError(res.message || 'AI fix failed')
       } else {
         setCorrected(res.data?.fixedCode ?? '')
+        setChanges(res.data?.changes || [])
+        setIsExplanation(false)
       }
     } catch (e: any) {
+      console.error('❌ [DEBUG] Error in handleFix:', e)
       setError(e?.message ?? String(e))
     } finally {
       setLoading(false)
@@ -105,7 +124,9 @@ function App() {
   // clear corrected / AI output
   const handleClear = () => {
     setCorrected('')
+    setChanges([])
     setError(null)
+    setIsExplanation(false)
   }
 
   // ask backend AI to explain the corrected code (or input code if corrected empty)
@@ -121,6 +142,8 @@ function App() {
       } else {
         // place explanation into the corrected/AI output area
         setCorrected(res.data?.explanation ?? '')
+        setChanges([]) // Clear changes when showing explanation
+        setIsExplanation(true)
       }
     } catch (e: any) {
       setError(e?.message ?? String(e))
@@ -214,6 +237,8 @@ function App() {
 
           {error ? (
             <pre className="error">{error}</pre>
+          ) : corrected && changes.length > 0 && !isExplanation ? (
+            <CodeDisplay code={corrected} changes={changes} />
           ) : (
             <textarea
               className="corrected"
